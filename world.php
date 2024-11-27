@@ -23,7 +23,7 @@ else
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- HTML Table to display country details -->
-<table border="1">
+<!-- <table border="1">
     <thead>
         <tr>
             <th>Country Name</th>
@@ -42,9 +42,55 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
         <?php endforeach; ?>
     </tbody>
-</table>
-<ul>
-<?php foreach ($results as $row): ?>
-  <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
-<?php endforeach; ?>
-</ul>
+</table> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Database Lookup</title>
+    <link href="world.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+        <h1>World Database Lookup</h1>
+    </header>
+
+    <main>
+        <div id="result">
+            <?php if (!empty($results)): ?>
+                <!-- Display country data in a table -->
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Country Name</th>
+                            <th>Continent</th>
+                            <th>Independence Year</th>
+                            <th>Head of State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($results as $row): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row['name']) ?></td>
+                                <td><?= htmlspecialchars($row['continent']) ?></td>
+                                <td><?= htmlspecialchars($row['independence_year']) ?></td>
+                                <td><?= htmlspecialchars($row['head_of_state']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <!-- Display country data as a list -->
+                <ul>
+                    <?php foreach ($results as $row): ?>
+                        <li><?= htmlspecialchars($row['name']) . ' is ruled by ' . htmlspecialchars($row['head_of_state']); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </main>
+
+</body>
+</html>
